@@ -1,4 +1,4 @@
-/* Принудительная светлая тема — кнопка «День» */
+/* Светлая тема: принудительное переключение кнопкой «День» */
 
 :root.theme-light {
   --bg-color: #fff1f7;
@@ -8,9 +8,11 @@
   --accent-text-color: #353430;
   --title-color: #ffc2e6;
   --heading-color: #353430;
-  --button-hover-color: rgb(53 52 48 / 0.4);
+  --button-hover-color: rgb(50 49 45 / 0.4);
   --rec-visibility: hidden;
 }
+
+/* Светлая тема из системных настроек — работает только в режиме «Авто» */
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -21,7 +23,7 @@
     --accent-text-color: #353430;
     --title-color: #ffc2e6;
     --heading-color: #353430;
-    --button-hover-color: rgb(53 52 48 / 0.4);
+    --button-hover-color: rgb(50 49 45 / 0.4);
     --rec-visibility: hidden;
   }
 }

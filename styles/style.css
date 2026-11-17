@@ -7,9 +7,8 @@
   line-height: var(--line-height, 1.3);
   background-color: var(--bg-color, #000028);
   background-image: var(--bg-image, url("../images/cover-image-dark.png"));
-  background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
+  background-position: center;
   background-attachment: fixed;
 }
 
@@ -63,7 +62,7 @@
   position: absolute;
   inset-block-start: calc(var(--page-padding, 10px) + 2px);
   inset-inline-end: calc(var(--page-padding, 10px) + 28px);
-  color: var(--accent-color, #ff0070);
+  color: var(--heading-color, #ff0070);
   text-transform: uppercase;
   visibility: var(--rec-visibility, visible);
 }
@@ -76,12 +75,8 @@
   inline-size: 9px;
   block-size: 9px;
   border-radius: 50%;
-  background-color: var(--accent-color, #ff0070);
-  box-shadow: 0 0 4px 2px var(--accent-color, #ff0070);
-}
-
-.header__theme-menu {
-  grid-row: 1;
+  background-color: var(--heading-color, #ff0070);
+  box-shadow: 0 0 4px 2px var(--heading-color, #ff0070);
 }
 
 .header__theme-menu-list {
@@ -98,7 +93,6 @@
   text-transform: lowercase;
   background-color: transparent;
   cursor: pointer;
-  appearance: none;
 }
 
 .header__theme-menu-button:hover {
@@ -115,12 +109,12 @@
 
 .header__theme-menu-button_active {
   border-color: currentColor;
-  cursor: default;
   pointer-events: none;
 }
 
 .header__title {
   justify-self: start;
+  text-shadow: 4px 4px 0 var(--accent-color, #ff0070);
 }
 
 .header__text {
@@ -130,13 +124,12 @@
 /* ===== Ссылки ===== */
 
 .link {
-  border-block-end: 1px solid transparent;
   text-decoration: none;
   text-shadow: 2px 2px 0 var(--accent-color, #ff0070);
 }
 
 .link:hover {
-  border-block-end-color: currentColor;
+  border-block-end: 1px solid currentColor;
 }
 
 .link:focus {
@@ -150,38 +143,34 @@
 /* ===== Основной контент ===== */
 
 .content {
-  display: grid;
-  gap: 50px;
-  padding: 40px var(--page-padding, 10px);
+  padding: calc(4 * var(--page-padding, 10px)) var(--page-padding, 10px);
 }
 
-.section {
-  display: grid;
-  align-content: start;
-  gap: 20px;
+.section:not(:last-of-type) {
+  margin-block-end: calc(5 * var(--page-padding, 10px));
 }
 
 .section__title {
+  margin-block-end: calc(2 * var(--page-padding, 10px));
   color: var(--heading-color, #ff0070);
   font-size: var(--font-size, 18px);
+  line-height: var(--line-height, 1.3);
 }
 
 .section__subtitle {
   font-size: var(--font-size, 18px);
+  line-height: var(--line-height, 1.3);
 }
 
 .cards {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
-}
-
-.card {
-  display: grid;
-  gap: 10px;
 }
 
 .card__title {
   font-size: var(--font-size, 18px);
+  line-height: var(--line-height, 1.3);
 }
 
 /* В блоке советов заголовки карточек обычного начертания */
@@ -189,11 +178,16 @@
   font-weight: 400;
 }
 
+/* Отступ между заголовком карточки и текстом — 10px на всех ширинах */
+.card__text {
+  margin-block-start: 10px;
+}
+
 /* ===== Галерея ===== */
 
 .gallery {
   display: grid;
-  gap: 10px;
+  gap: var(--page-padding, 10px);
 }
 
 /* Коробка пункта списка не нужна: картинки сами становятся элементами сетки */
@@ -202,7 +196,6 @@
 }
 
 .gallery__image {
-  display: block;
   inline-size: 100%;
 }
 
@@ -234,7 +227,6 @@
   color: var(--title-color, #db00ff);
   font-size: var(--title-size, clamp(7.25rem, 7.0115rem + 1.0178vw, 7.5rem));
   line-height: 0.825;
-  text-shadow: 4px 4px 0 var(--accent-color, #ff0070);
 }
 
 .title-decor {
@@ -254,13 +246,22 @@
   }
 
   .content {
-    gap: 80px;
-    padding-block: 60px;
+    padding: calc(3 * var(--page-padding, 20px)) var(--page-padding, 20px);
+  }
+
+  .section:not(:last-of-type) {
+    margin-block-end: calc(4 * var(--page-padding, 20px));
   }
 
   .section {
+    display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 20px;
+    align-items: start;
+    gap: var(--page-padding, 20px);
+  }
+
+  .section__title {
+    margin-block-end: 0;
   }
 
   /* три карточки занимают всю ширину под заголовком */
@@ -268,21 +269,31 @@
     grid-column: 1 / -1;
   }
 
-  /* подзаголовок и карточки советов — только в правой колонке */
+  /* Подзаголовок и карточки советов — в правой колонке, в одной строке сетки:
+     так карточки начинаются сразу под подзаголовком, а не под высоким
+     заголовком секции в левой колонке */
   .section_advices .section__subtitle,
   .section_advices .cards {
     grid-column: 2;
+    grid-row: 1;
+    align-self: start;
   }
 
-  /* заголовок галереи и мозаика — на всю ширину */
-  .section_gallery .section__title,
-  .section_gallery .gallery {
-    grid-column: 1 / -1;
+  .section_advices .cards {
+    margin-block-start: calc(
+      var(--font-size, 18px) * var(--line-height, 1.3) +
+        var(--page-padding, 20px)
+    );
+  }
+
+  /* галерея: заголовок полосой, мозаика — на всю ширину */
+  .section_gallery {
+    grid-template-columns: 1fr;
   }
 
   .gallery {
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: var(--page-padding, 20px);
   }
 
   .gallery__image {
@@ -309,37 +320,36 @@
     min-block-size: 640px;
   }
 
-  .header__text {
-    inline-size: 491px;
-  }
-
   .header__theme-menu {
-    align-self: start;
     justify-self: center;
+    align-self: start;
   }
 
   .header__theme-menu-list {
     flex-direction: row;
   }
 
+  .header__text {
+    inline-size: 491px;
+  }
+
   .section {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  /* контент всех секций — две правые колонки */
   .section .cards,
   .section_advices .section__subtitle {
     grid-column: 2 / -1;
   }
 
-  /* кроме секции с тремя равными карточками и галереи */
   .section_wide .cards {
     grid-column: 1 / -1;
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--page-padding, 20px);
   }
 
-  .section_gallery .section__title,
-  .section_gallery .gallery {
+  .section_gallery .section__title {
     grid-column: 1 / -1;
   }
 
