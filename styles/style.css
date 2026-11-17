@@ -31,29 +31,15 @@
 .decorated-zone::before {
   inset-block-start: var(--page-padding, 10px);
   inset-inline-end: var(--page-padding, 10px);
-  border-block-start: 1px solid var(--accent-color, #ff0070);
-  border-inline-end: 1px solid var(--accent-color, #ff0070);
+  border-block-start: 1px solid var(--heading-color, #ff0070);
+  border-inline-end: 1px solid var(--heading-color, #ff0070);
 }
 
 .decorated-zone::after {
   inset-block-end: var(--page-padding, 10px);
   inset-inline-start: var(--page-padding, 10px);
-  border-block-end: 1px solid var(--accent-color, #ff0070);
-  border-inline-start: 1px solid var(--accent-color, #ff0070);
-}
-
-/* Заголовок размером с пол-экрана: и h1 в шапке, и h2 в подвале */
-.title-main {
-  color: var(--title-color, #db00ff);
-  font-size: clamp(7.25rem, 7.0115rem + 1.0178vw, 7.5rem);
-  line-height: 0.825;
-  text-shadow: 4px 4px 0 var(--accent-color, #ff0070);
-}
-
-/* Плашка с акцентным фоном */
-.title-decor {
-  color: var(--accent-text-color, #000028);
-  background-color: var(--accent-color, #ff0070);
+  border-block-end: 1px solid var(--heading-color, #ff0070);
+  border-inline-start: 1px solid var(--heading-color, #ff0070);
 }
 
 /* ===== Шапка ===== */
@@ -152,4 +138,47 @@
 /* В секции с советами заголовки карточек обычного начертания */
 .card__title_regular {
   font-weight: 400;
+}
+
+/* ===== Галерея ===== */
+
+.section_gallery {
+  gap: 10px;
+}
+
+.gallery {
+  display: grid;
+  gap: 10px;
+}
+
+.gallery__image {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ===== Подвал ===== */
+
+.footer {
+  display: grid;
+  place-items: center;
+  block-size: 100vh;
+  min-block-size: 668px;
+  padding: var(--page-padding, 10px);
+}
+
+/* ===== Утилиты: идут последними, чтобы переопределять компоненты ===== */
+
+.title-main {
+  color: var(--title-color, #db00ff);
+  font-size: clamp(7.25rem, 7.0115rem + 1.0178vw, 7.5rem);
+  line-height: 0.825;
+  text-shadow: 4px 4px 0 var(--accent-color, #ff0070);
+}
+
+.title-decor {
+  color: var(--accent-text-color, #000028);
+  background-color: var(--accent-color, #ff0070);
 }
