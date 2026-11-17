@@ -1,3 +1,5 @@
+/* Основные стили проекта. Базовая тема — тёмная, вёрстка mobile first. */
+
 .page {
   color: var(--text-color, #f1b2ce);
   font-family: var(--font-family, "IBM Plex Mono", monospace);
@@ -21,7 +23,6 @@
 .decorated-zone::after {
   content: "";
   position: absolute;
-  z-index: -1;
   inline-size: 25px;
   block-size: 25px;
 }
@@ -43,27 +44,34 @@
 /* ===== Шапка ===== */
 
 .header {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
+  justify-items: end;
+  align-items: center;
   block-size: 100vh;
-  block-size: 100dvh;
   min-block-size: 668px;
   padding: var(--page-padding, 10px);
 }
 
+/* Отдельным правилом, чтобы не дублировать свойство внутри одного */
+@supports (block-size: 100dvh) {
+  .header {
+    block-size: 100dvh;
+  }
+}
+
 .header__rec {
   position: absolute;
-  inset-block-start: calc(var(--page-padding, 10px) + 4px);
-  inset-inline-end: calc(var(--page-padding, 10px) + 35px);
+  inset-block-start: calc(var(--page-padding, 10px) + 2px);
+  inset-inline-end: calc(var(--page-padding, 10px) + 30px);
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
   gap: 10px;
   color: var(--accent-color, #ff0070);
   visibility: var(--rec-visibility, visible);
 }
 
-.header__rec::before {
+.header__rec::after {
   content: "";
   inline-size: 9px;
   block-size: 9px;
@@ -73,8 +81,7 @@
 }
 
 .header__theme-menu {
-  align-self: flex-end;
-  margin-block-start: 30px;
+  grid-row: 1;
 }
 
 .header__theme-menu-list {
@@ -112,10 +119,10 @@
   pointer-events: none;
 }
 
-/* margin-block: auto прижимает заголовок и лид к низу шапки
-   при любой высоте окна */
+/* Заголовок прижат влево, лид — узкой плашкой справа.
+   Строки 1fr сверху и снизу держат блок по центру при любой высоте окна */
 .header__title {
-  margin-block: auto 20px;
+  justify-self: start;
 }
 
 .header__text {
@@ -186,21 +193,18 @@
 
 /* ===== Галерея ===== */
 
-.section_gallery {
-  gap: 10px;
-}
-
 .gallery {
   display: grid;
   gap: 10px;
 }
 
+.gallery__item {
+  display: grid;
+}
+
 .gallery__image {
   display: block;
   inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
-  object-position: center;
 }
 
 /* ===== Подвал ===== */
@@ -209,12 +213,17 @@
   display: grid;
   place-items: center;
   block-size: 100vh;
-  block-size: 100dvh;
   min-block-size: 668px;
   padding: var(--page-padding, 10px);
 }
 
-/* В подвале тень тоньше, чем в шапке — так в макете */
+@supports (block-size: 100dvh) {
+  .footer {
+    block-size: 100dvh;
+  }
+}
+
+/* В подвале тень тоньше, чем в шапке */
 .footer__title {
   text-shadow: 2px 2px 0 var(--accent-color, #ff0070);
 }
@@ -237,7 +246,6 @@
 
 @media (width > 768px) {
   .header__text {
-    align-self: flex-end;
     inline-size: 22.75rem;
   }
 
@@ -247,7 +255,7 @@
   }
 
   .section {
-    grid-template-columns: minmax(14.75rem, 1fr) 2fr;
+    grid-template-columns: 1fr 2fr;
     column-gap: 20px;
   }
 
@@ -262,21 +270,10 @@
     grid-column: 2;
   }
 
-  /* заголовок галереи — высокая колонка слева, картинки справа */
-  .section_gallery {
-    grid-template-columns: minmax(14.75rem, 1fr) 2fr;
-    column-gap: 20px;
-    align-items: stretch;
-  }
-
-  .section_gallery .section__title {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
+  /* заголовок галереи — полосой над картинками */
+  .section_gallery .section__title,
   .section_gallery .gallery {
-    grid-column: 2;
-    grid-row: 1;
+    grid-column: 1 / -1;
   }
 
   .gallery {
@@ -293,6 +290,12 @@
   .gallery__item:nth-child(3) {
     grid-row: span 2;
   }
+
+  .gallery__image {
+    block-size: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 }
 
 /* ===== Десктоп ===== */
@@ -307,12 +310,23 @@
   }
 
   .header__theme-menu {
-    align-self: center;
-    margin-block-start: 0;
+    align-self: start;
+    justify-self: center;
   }
 
   .header__theme-menu-list {
     flex-direction: row;
+  }
+
+  /* на десктопе все секции — три равные колонки,
+     контент занимает две правые */
+  .section {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .section_advices .section__subtitle,
+  .section_advices .cards {
+    grid-column: 2 / -1;
   }
 
   .section_wide .cards {
