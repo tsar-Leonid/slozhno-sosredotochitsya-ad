@@ -182,3 +182,65 @@
   color: var(--accent-text-color, #000028);
   background-color: var(--accent-color, #ff0070);
 }
+
+@media (width > 768px) {
+  .title-main {
+    font-size: clamp(7.5rem, 0.5625rem + 14.4531vw, 9.8125rem);
+  }
+
+  .header__text {
+    align-self: flex-end;
+    inline-size: clamp(364px, 50%, 491px);
+  }
+
+  .content {
+    gap: 80px;
+    padding-block: 60px;
+  }
+
+  .section {
+    grid-template-columns: minmax(236px, 1fr) 2fr;
+    column-gap: 20px;
+  }
+
+  /* три карточки занимают всю ширину под заголовком */
+  .section_wide .cards {
+    grid-column: 1 / -1;
+  }
+
+  /* подзаголовок и карточки советов — только в правой колонке */
+  .section_advices .section__subtitle,
+  .section_advices .cards {
+    grid-column: 2;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .gallery__item:first-child,
+  .gallery__item:last-child {
+    grid-column: span 2;
+  }
+
+  .gallery__item:nth-child(2),
+  .gallery__item:nth-child(3) {
+    grid-row: span 2;
+  }
+}
+
+@media (width > 1024px) {
+  .header__theme-menu {
+    align-self: center;
+    margin-block-start: 0;
+  }
+
+  .header__theme-menu-list {
+    flex-direction: row;
+  }
+
+  .section_wide .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
