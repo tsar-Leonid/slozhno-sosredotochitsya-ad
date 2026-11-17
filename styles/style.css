@@ -76,6 +76,47 @@
   margin-block: auto 20px;
 }
 
+.header__theme-menu {
+  align-self: flex-end;
+  margin-block-start: 40px;
+}
+
+.header__theme-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header__theme-menu-button {
+  padding: 2px 13px;
+  border: 1px solid transparent;
+  color: var(--heading-color, #ff0070);
+  line-height: 1;
+  text-transform: lowercase;
+  background-color: transparent;
+  cursor: pointer;
+  appearance: none;
+}
+
+.header__theme-menu-button:hover {
+  border-color: var(--button-hover-color, rgb(255 0 112 / 0.4));
+}
+
+.header__theme-menu-button:focus {
+  outline: none;
+}
+
+.header__theme-menu-button:focus-visible {
+  border-block-end-color: currentColor;
+}
+
+.header__theme-menu-button_active {
+  border-color: currentColor;
+  cursor: default;
+  pointer-events: none;
+}
+
+
 /* ===== Ссылки ===== */
 
 .link {
