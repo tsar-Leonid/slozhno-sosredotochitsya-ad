@@ -1,13 +1,14 @@
 :root {
-  /* Шрифт и типографика */
+  /* Типографика */
   --font-family: "IBM Plex Mono", monospace;
   --font-size: 18px;
   --line-height: 1.3;
+  --title-size: clamp(7.25rem, 7.0115rem + 1.0178vw, 7.5rem);
 
-  /* Отступ по краям страницы: 10px на 375, плавно до 20px к 768 */
+  /* Отступ от края страницы: 10px на мобилке, 20px на планшете и шире */
   --page-padding: clamp(10px, 2.6vw, 20px);
 
-  /* Цвета тёмной темы */
+  /* Цвета */
   --bg-color: #000028;
   --bg-image: url("../images/cover-image-dark.png");
   --text-color: #f1b2ce;
@@ -17,6 +18,12 @@
   --heading-color: #ff0070;
   --button-hover-color: rgb(255 0 112 / 0.4);
 
-  /* Видимость декоративной надписи REC */
+  /* Надпись REC видна только в тёмной теме */
   --rec-visibility: visible;
+}
+
+@media (width > 768px) {
+  :root {
+    --title-size: clamp(7.5rem, 0.5625rem + 14.4531vw, 9.8125rem);
+  }
 }

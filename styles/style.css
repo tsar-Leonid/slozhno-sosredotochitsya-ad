@@ -1,7 +1,4 @@
-/* Основные стили проекта. Это стили для темы, которую вы верстаете первой. */
-
 .page {
-  min-block-size: 100vh;
   color: var(--text-color, #f1b2ce);
   font-family: var(--font-family, "IBM Plex Mono", monospace);
   font-size: var(--font-size, 18px);
@@ -14,7 +11,7 @@
   background-attachment: fixed;
 }
 
-/* ===== Декоративные элементы ===== */
+/* ===== Декоративные уголки: шапка и подвал ===== */
 
 .decorated-zone {
   position: relative;
@@ -24,6 +21,7 @@
 .decorated-zone::after {
   content: "";
   position: absolute;
+  z-index: -1;
   inline-size: 25px;
   block-size: 25px;
 }
@@ -48,6 +46,7 @@
   display: flex;
   flex-direction: column;
   block-size: 100vh;
+  block-size: 100dvh;
   min-block-size: 668px;
   padding: var(--page-padding, 10px);
 }
@@ -57,13 +56,14 @@
   inset-block-start: calc(var(--page-padding, 10px) + 4px);
   inset-inline-end: calc(var(--page-padding, 10px) + 35px);
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
   gap: 10px;
   color: var(--accent-color, #ff0070);
   visibility: var(--rec-visibility, visible);
 }
 
-.header__rec::after {
+.header__rec::before {
   content: "";
   inline-size: 9px;
   block-size: 9px;
@@ -72,13 +72,9 @@
   box-shadow: 0 0 4px 2px var(--accent-color, #ff0070);
 }
 
-.header__title {
-  margin-block: auto 20px;
-}
-
 .header__theme-menu {
   align-self: flex-end;
-  margin-block-start: 40px;
+  margin-block-start: 30px;
 }
 
 .header__theme-menu-list {
@@ -88,7 +84,7 @@
 }
 
 .header__theme-menu-button {
-  padding: 2px 13px;
+  padding: 2px 13px 4px;
   border: 1px solid transparent;
   color: var(--heading-color, #ff0070);
   line-height: 1;
@@ -116,13 +112,22 @@
   pointer-events: none;
 }
 
+/* margin-block: auto прижимает заголовок и лид к низу шапки
+   при любой высоте окна */
+.header__title {
+  margin-block: auto 20px;
+}
+
+.header__text {
+  font-weight: 700;
+}
 
 /* ===== Ссылки ===== */
 
 .link {
   border-block-end: 1px solid transparent;
   text-decoration: none;
-  text-shadow: 1px 1px 0 var(--accent-color, #ff0070);
+  text-shadow: 2px 2px 0 var(--accent-color, #ff0070);
 }
 
 .link:hover {
@@ -154,12 +159,10 @@
 .section__title {
   color: var(--heading-color, #ff0070);
   font-size: var(--font-size, 18px);
-  line-height: var(--line-height, 1.3);
 }
 
 .section__subtitle {
   font-size: var(--font-size, 18px);
-  line-height: var(--line-height, 1.3);
 }
 
 .cards {
@@ -176,7 +179,7 @@
   font-size: var(--font-size, 18px);
 }
 
-/* В секции с советами заголовки карточек обычного начертания */
+/* В блоке советов заголовки карточек обычного начертания */
 .card__title_regular {
   font-weight: 400;
 }
@@ -206,15 +209,21 @@
   display: grid;
   place-items: center;
   block-size: 100vh;
+  block-size: 100dvh;
   min-block-size: 668px;
   padding: var(--page-padding, 10px);
 }
 
-/* ===== Утилиты: идут последними, чтобы переопределять компоненты ===== */
+/* В подвале тень тоньше, чем в шапке — так в макете */
+.footer__title {
+  text-shadow: 2px 2px 0 var(--accent-color, #ff0070);
+}
+
+/* ===== Утилиты: в конце, чтобы переопределять компоненты ===== */
 
 .title-main {
   color: var(--title-color, #db00ff);
-  font-size: clamp(7.25rem, 7.0115rem + 1.0178vw, 7.5rem);
+  font-size: var(--title-size, clamp(7.25rem, 7.0115rem + 1.0178vw, 7.5rem));
   line-height: 0.825;
   text-shadow: 4px 4px 0 var(--accent-color, #ff0070);
 }
@@ -224,14 +233,12 @@
   background-color: var(--accent-color, #ff0070);
 }
 
-@media (width > 768px) {
-  .title-main {
-    font-size: clamp(7.5rem, 0.5625rem + 14.4531vw, 9.8125rem);
-  }
+/* ===== Планшет и больше ===== */
 
+@media (width > 768px) {
   .header__text {
     align-self: flex-end;
-    inline-size: clamp(364px, 50%, 491px);
+    inline-size: 22.75rem;
   }
 
   .content {
@@ -240,7 +247,7 @@
   }
 
   .section {
-    grid-template-columns: minmax(236px, 1fr) 2fr;
+    grid-template-columns: minmax(14.75rem, 1fr) 2fr;
     column-gap: 20px;
   }
 
@@ -253,6 +260,23 @@
   .section_advices .section__subtitle,
   .section_advices .cards {
     grid-column: 2;
+  }
+
+  /* заголовок галереи — высокая колонка слева, картинки справа */
+  .section_gallery {
+    grid-template-columns: minmax(14.75rem, 1fr) 2fr;
+    column-gap: 20px;
+    align-items: stretch;
+  }
+
+  .section_gallery .section__title {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .section_gallery .gallery {
+    grid-column: 2;
+    grid-row: 1;
   }
 
   .gallery {
@@ -271,7 +295,17 @@
   }
 }
 
+/* ===== Десктоп ===== */
+
 @media (width > 1024px) {
+  .header {
+    min-block-size: 640px;
+  }
+
+  .header__text {
+    inline-size: 30.7rem;
+  }
+
   .header__theme-menu {
     align-self: center;
     margin-block-start: 0;
@@ -283,5 +317,9 @@
 
   .section_wide .cards {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer__title {
+    text-shadow: 4px 4px 0 var(--accent-color, #ff0070);
   }
 }
